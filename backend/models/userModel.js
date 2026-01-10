@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import bcrypt from 'bcrypt'
 
 const userSchema = new mongoose.Schema({
     name:{
@@ -29,14 +30,19 @@ const userSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        required: [true, 'phone number is required']
+        required: [false, 'phone number is required']
     },
     profilePic: {
         type: String,
-        required: [true, 'pic is required']
+        required: [false, 'pic is required']
     }
 },
 {timestamps:true} // this will create created and updated time
 )
+
+// below code update poassword to hash value
+userSchema.pre("save", async function() {
+    this.password = await bcrypt.hash(this.password, 10);
+});
 // mongoose.model('collection name', 'schema name'); 
 export const User = mongoose.model('Users', userSchema); 

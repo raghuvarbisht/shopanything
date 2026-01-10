@@ -17,7 +17,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(cors());
 
-app.use('/api/v1/', userRoutes);
+app.use('/api/v1/user', userRoutes); // register route
 
 app.get('/', (req,res) => {
     return res.status(200).send("<h1>weclome to node");
