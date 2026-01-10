@@ -44,3 +44,46 @@ export const registerController = async (req, res) => {
     }
 
 }
+
+
+export const loginController =  async (req, res) => {
+     try {
+        const {email, password} = req.body;
+        if(!email || !password) {
+            return res.status(500).send({
+                success: false,
+                message: 'please add email or password'
+            })
+        }
+        // check user exist or not
+        const user = await userModel.findOne({email});
+        if (!user){
+            return res.status(404).send({
+                success: false,
+                message: 'user not found'
+            })
+        }
+        // check password
+        const isPasswordMatched = await user.comparePassword(password);
+        if(!isPasswordMatched){
+            return res.status(500).send({
+                success: false,
+                message: 'invalid credenatils'
+            })
+        }
+        res.status(200).send({
+            success: true,
+            message: 'login successfully'
+        })
+      
+
+     } catch (error) {
+        res.status(500).send({
+            success: false,
+            message: 'Please add email or password',
+            error: error
+        })
+
+     }
+
+}
