@@ -71,9 +71,21 @@ export const loginController =  async (req, res) => {
                 message: 'invalid credenatils'
             })
         }
-        res.status(200).send({
+        // generate token when user login success
+        const token = user.generateToken();
+
+        res.status(200).cookie("token", token, {
+            secure: process.env.NODE_ENV === 'prod', // https only in prod
+            httpOnly: process.env.NODE_ENV === 'development' ? true : false,
+            sameSite: "strict",
+            // Cookie expiration
+            maxAge: 24 * 60 * 60 * 1000,  // 1 day in milliseconds
+            // OR
+            // expires: new Date(Date.now() + 24 * 60 * 60 * 1000)
+        }).send({
             success: true,
-            message: 'login successfully'
+            message: 'login successfully',
+            token
         })
       
 
