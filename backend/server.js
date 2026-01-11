@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import cloudinary from 'cloudinary';
 //routes
 import userRoutes from './routes/userRoutes.js';
+import productRoutes from './routes/productRoutes.js';
 import { connectDB } from './config/db.js';
 
 
@@ -27,6 +28,7 @@ app.use(cors()); // for cors issue
 app.use(cookieParser());// uae for cookie
 
 app.use('/api/v1/user', userRoutes); // register route
+app.use('/api/v1/product', productRoutes); // products
 
 app.get('/', (req,res) => {
     return res.status(200).send("<h1>welcome to node</h1>");

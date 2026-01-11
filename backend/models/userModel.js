@@ -4,17 +4,20 @@ import JWT from 'jsonwebtoken'
 const userSchema = new mongoose.Schema({
     name:{
         type: String,
-        required:[true , 'name is required']
+        required:[true , 'user name is required'],
+        trim: true,
+        maxLength:[100, 'user name max length 100']
     },
     email: {
         type: String,
-        required:[true, 'email is required'],
-        unique:[true, 'email already taken']
+        required:[true, 'user email is required'],
+        trim: true,
+        unique:[true, 'user email already taken']
     },
     password: {
         type: String,
         requird: [true, 'password is required'],
-        minLength:[ 6, 'password length shoudl be greater then 6 character']
+        minlength:[ 6, 'password length should be greater then 6 character']
     },
     address: {
         type: String,
