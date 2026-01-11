@@ -5,6 +5,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import cloudinary from 'cloudinary';
+import { apiLimiter } from "./middlewares/rateLimiter.js";
 //routes
 import userRoutes from './routes/userRoutes.js';
 import productRoutes from './routes/productRoutes.js';
@@ -26,6 +27,11 @@ app.use(morgan("dev")); // for logging
 app.use(express.json()); // for json parse
 app.use(cors()); // for cors issue
 app.use(cookieParser());// uae for cookie
+
+
+// to apply on specific route app.use('/api/v1/product', apiLimiter);
+//apply rate limit on all api 
+app.use(apiLimiter);
 
 app.use('/api/v1/user', userRoutes); // register route
 app.use('/api/v1/product', productRoutes); // products
