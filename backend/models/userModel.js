@@ -32,12 +32,17 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [false, 'phone number is required']
     },
+    // multer for image uplaod and datauri for meta data upadate
     profilePic: {
-        type: String,
-        required: [false, 'pic is required']
+        public_id: {
+            type: String
+        },
+        url: {
+            type: String
+        }    
     }
 },
-{timestamps:true} // this will create created and updated time
+{ timestamps: true } // this will create created and updated time
 )
 
 // below code update poassword to hash value
